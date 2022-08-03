@@ -23,4 +23,17 @@ export class FavoritesController extends Controller {
             throw new Exception({ message: err.message, status: ERROR_BAD_REQUEST }, true);
         }
     }
+
+    async deleteFavorite(req, res) {
+        try {
+            this.setData(req.body);
+            const favorites = await this.business.getData(PATH_FAVORITE_DATABASE, true);
+            this.data = await this.business.addIdToObject(this.data, PATH_FAVORITE_DATABASE);
+            this.data = this.business.addDataToArray(this.data, favorites)
+            await this.business.insertData(PATH_FAVORITE_DATABASE, this.data, true);
+            res.status(200).send('Pokemon Favoritado!');
+        } catch (err) {
+            throw new Exception({ message: err.message, status: ERROR_BAD_REQUEST }, true);
+        }
+    }
 }

@@ -29,6 +29,19 @@ export class Model {
         let highestId = Math.max(...data.map(eachData => eachData.id));
         return highestId + 1;
     }
+
+    async deleteItem(id, path){
+        let data = await this.getData(path, true);
+        let index = 0;
+        data.map((eachData)=>{
+            if(eachData.id == id)
+            {
+                index = indexOf(eachData);
+                data.splice(index, 1);
+                this.reWriteFile(path, data, true);
+            }
+        })
+    }
     
     async getDataByUrl(url){
         return await fetch(url);

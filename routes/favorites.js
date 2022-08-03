@@ -12,4 +12,13 @@ export function routeFavorite(app) {
                 res.status(err.status).send({ msg: err.message });
             }
         })
+        .delete(async (req, res) => {
+            try {
+                await FavoritesObj.deleteFavorite(req, res)
+            }
+            catch (err) {
+                res.status(err.status).send({ msg: err.message });
+            }
+        })
+        
 }
